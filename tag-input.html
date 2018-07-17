@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<style type="text/css">
+		* {
+			box-sizing: border-box;
+			font-family: "arial", "san-serif";
+		}
+		body {
+			/*style*/
+			background-color: #eee;
+		}
+
+		.wrapper {
+			/*box*/
+			min-width: 400px;
+			width: 50%;
+			max-width: 600px;
+			margin: auto;
+			margin-top: 2rem;
+		}
+
+		.tag-input {
+			/*layout-flex*/
+
+			display: flex;
+			flex-wrap: wrap;
+
+			/*box*/
+			padding: 8px;
+
+			/*style*/
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			background-color: white;
+
+		}
+
+		.tag-input-item, 
+		.tag-input-input {
+			/*box*/
+			margin: 4px;
+			padding: 4px 8px;
+
+			/*style*/
+			height: 28px;
+
+		}
+
+		.tag-input-item {
+			/*style*/
+			background-color: lightblue;
+			border-radius: 14px;
+
+			/*box*/
+			max-width: 200px;
+		}
+
+		.tag-input-item span {
+			display: inline-block;
+		}
+
+		.tag-input-item > span:first-child {
+			vertical-align: bottom;
+			max-width: 160px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.tag-input-item__delete:hover {
+			color: white;
+			cursor: pointer;
+		}
+
+		.tag-input-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+		    font-style: italic;
+		}
+
+		.tag-input-input::-moz-placeholder { /* Firefox 19+ */
+		    font-style: italic;
+		}
+
+		.tag-input-input:-ms-input-placeholder { /* IE 10+ */
+		    font-style: italic;
+		}
+
+		.tag-input-input:-moz-placeholder { /* Firefox 18- */
+		    font-style: italic;  
+		}
+
+		.tag-input-input {
+			/*flex*/
+			flex: 1 1 100px;
+
+			/*style*/
+			border: none;
+			background-color: transparent; 
+
+			/*box*/
+			min-width: 50px;
+		}
+
+		.tag-input-input:focus {
+			/*style*/
+			outline: 0;
+		}	
+	</style>
+	<script type="text/javascript">
+		document.addEventListener('click', function(e){
+			if(e.target && e.target.classList.contains('tag-input')) {
+				focusInput(e) 
+			}
+		})
+
+		document.addEventListener('click', function(e){
+			if(e.target && e.target.classList.contains('tag-input-item__delete')) {
+				deleteTag(e);
+			}
+		})
+
+		document.addEventListener('keypress', function(e){
+			if(e.target && e.target.classList.contains('tag-input-input')) {
+				if(e.key === 'Enter') {
+					enterTag(e)
+				}
+			}
+		})
+
+		function deleteTag (e) {
+			console.log('i am tryting to delete tag ')
+			let item = e.target.parentElement
+			let parent = item.parentElement
+			parent.removeChild(item)
+		}
+
+		function enterTag (e) {
+			console.log(e)
+			let inputValue = e.target.value
+			let tagItem = document.createElement('DIV')
+			tagItem.className = 'tag-input-item'
+			let contentSpan = document.createElement('SPAN')
+			contentSpan.innerHTML = inputValue
+			let deleteSpan = document.createElement('SPAN')
+			deleteSpan.className = 'tag-input-item__delete'
+			deleteSpan.innerHTML = '\&nbsp;x'
+			tagItem.appendChild(contentSpan)
+			tagItem.appendChild(deleteSpan)
+			console.log(tagItem)
+
+			let parent = e.target.parentElement
+			parent.insertBefore(tagItem, e.target)
+			e.target.value = ''
+		}
+
+		function focusInput (e) {
+			let tagInput = e.target
+			let tagInputInput = tagInput.getElementsByTagName('input')[0]
+			tagInputInput.focus()
+			console.log(tagInputInput)
+		}
+
+	</script>
+</head>
+	<body>
+		<div class="wrapper">
+			<div class='tag-input'>
+				<div class='tag-input-item'><span>test </span> <span class='tag-input-item__delete test'> x </span></div>
+				<div class='tag-input-item'><span>tessf sf sdf sadf dsaf adsf sdf sdf </span> <span class='tag-input-item__delete'> x </span></div>
+				<div class='tag-input-item'><span>tesf </span> <span class='tag-input-item__delete'>x</span></div>
+				<div class='tag-input-item'><span>test </span> <span class='tag-input-item__delete'>x</span></div>
+				<div class='tag-input-item'><span>test </span> <span class='tag-input-item__delete'>x</span></div>				
+				<input class='tag-input-input' placeholder="input tag" type='text'/>
+			</div>	
+		</div>
+	</body>
+</html>
